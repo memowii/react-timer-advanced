@@ -1,61 +1,10 @@
 .Timer {
-  align-items: center;
-  background-color: #f0f0f0;
-  border: 10px solid #dddcdc;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: auto;
-  overflow: hidden;
-  text-align: center;
-  height: 300px;
-  width: 300px;
-  position: relative;
-}
-
-.Timer__text-info {
-  position: absolute;
-  top: 50px;
-  color: #17a2b8;
-  align-self: center;
-  font-size: 1rem;
-}
-
-.Timer__text-info--red {
-  color: red  ;
-}
-
-.Timer__text-info--big {
-  top: 100px;
-  font-size: 3rem;
-}
-
-.Timer__input {
-  position: absolute;
-  top: 90px;
-  border: none;
-  background-color: #f0f0f0;
-  color: #26cbf5;
-  font-size: 46px;
-  font-weight: 600;
-  outline-width: 0;
-  text-align: center;
-  vertical-align: middle;
-  width: 300px;
-  align-self: center;
-}
-
-.Timer__input::placeholder {
-  color: #26cbf5;
-}
-
-.Timer__panel {
-  position: absolute;
-  bottom: 0;
-}
-
-.Timer__panel > div {
-  width: 300px;
-  height: 80px;
+ align-items: center;
+ border: 0.2rem solid #333;
+ background-color: #333;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ width: 16.5rem;
+ margin: auto;
 }
