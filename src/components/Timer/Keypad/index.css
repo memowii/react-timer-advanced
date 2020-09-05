@@ -7,9 +7,9 @@
 }
 
 .Keypad .btn {
-  margin: 3.2px;
+  margin: 0.2rem;
 }
 
 .Keypad > * {
-  flex: 1 1 calc(33.33% - 6.4px);
+  flex: 1 1 calc(33.33% - 0.4rem);
 }
