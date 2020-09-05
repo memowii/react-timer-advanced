@@ -1,0 +1,15 @@
+.Keypad {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #999;
+  padding: 0.2rem;
+  height: 10rem;
+}
+
+.Keypad .btn {
+  margin: 3.2px;
+}
+
+.Keypad > * {
+  flex: 1 1 calc(33.33% - 6.4px);
+}
