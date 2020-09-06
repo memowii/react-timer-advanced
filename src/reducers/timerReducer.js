@@ -1,15 +1,18 @@
 import { Time } from "../Utils/time";
 
-export const TimerInitialState = {
+export const timerInitialState = {
   milliseconds: 0,
   seconds: 0,
+  minutes: 0,
+  hours: 0,
+  lastInputSelected: null,
   timeInfo: Time.getTime(0),
   isTimerStarted: false,
   timerInterval: null,
   isAlmostFinished: false,
 };
 
-export function TimerReducer(state, action) {
+export function timerReducer(state, action) {
   switch (action.type) {
     case "MILLISECONDS":
       return { ...state, milliseconds: action.payload };
@@ -20,7 +23,7 @@ export function TimerReducer(state, action) {
 
       if (state.milliseconds < 0) {
         clearInterval(state.timerInterval);
-        return { ...TimerInitialState };
+        return { ...timerInitialState };
       }
 
       return {
@@ -29,6 +32,19 @@ export function TimerReducer(state, action) {
       };
     case "SECONDS":
       return { ...state, seconds: action.payload };
+    case "INPUT":
+      return { ...state, lastInputSelected: action.payload };
+    case "UPDATE_TIMES":
+      const timeUnit = state.lastInputSelected.dataset.timeUnit;
+
+      switch (timeUnit) {
+        case "s":
+          return { ...state, seconds: action.payload };
+        case "m":
+          return { ...state, minutes: action.payload };
+        case "h":
+          return { ...state, hours: action.payload };
+      }
     case "TIMEINFO":
       return { ...state, timeInfo: Time.getTime(action.payload) };
     case "UPDATE_TIMEINFO":
