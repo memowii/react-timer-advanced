@@ -7,26 +7,24 @@ import { Input } from "./Input";
 export const Display = ({ hours, minutes, seconds, handleOnFocus }) => (
   <div className="Display">
     <Labels />
-    <div
-      className="input-group input-group-lg Display__input-group"
-      onClick={handleOnFocus}
-    >
+    <div className="input-group input-group-lg Display__input-group">
       <Input
         className="form-control Display__time Display__hours"
-        defaultValue={hours}
-        timeUnit="h"
+        value={hours}
+        handleOnFocus={() => handleOnFocus("h")}
       />
       <span className="Display__time Display__separator">:</span>
       <Input
         className="form-control Display__time Display__minutes"
-        defaultValue={minutes}
-        timeUnit="m"
+        value={minutes}
+        handleOnFocus={() => handleOnFocus("m")}
       />
       <span className="Display__time Display__separator">:</span>
       <Input
         className="form-control Display__time Display__seconds"
-        defaultValue={seconds}
+        value={seconds}
         timeUnit="s"
+        handleOnFocus={() => handleOnFocus("s")}
       />
     </div>
   </div>

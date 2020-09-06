@@ -10,16 +10,15 @@ import { timerInitialState, timerReducer } from "../../reducers/timerReducer";
 export function Timer() {
   const [state, dispatch] = useReducer(timerReducer, timerInitialState);
 
-  const handleOnFocus = (e) => {
-    e.persist();
-    dispatch({ type: "INPUT", payload: e.target });
+  const handleOnFocus = (unitTime) => {
+    dispatch({ type: "UNIT_TIME", payload: unitTime });
   };
 
   const handleOnClickKeypad = (e) => {
     e.persist();
 
     if (!state.lastInputSelected) return;
-    
+
     const btn = e.target;
     dispatch({ type: "UPDATE_TIMES", payload: btn.dataset.value });
   };

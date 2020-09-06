@@ -2,10 +2,11 @@ import { Time } from "../Utils/time";
 
 export const timerInitialState = {
   milliseconds: 0,
-  seconds: 0,
-  minutes: 0,
-  hours: 0,
-  lastInputSelected: null,
+  seconds: '00',
+  minutes: '00',
+  hours: '00',
+  // unit time can take the value of h, m, or s.
+  selectedUnitTime: null,
   timeInfo: Time.getTime(0),
   isTimerStarted: false,
   timerInterval: null,
@@ -32,8 +33,8 @@ export function timerReducer(state, action) {
       };
     case "SECONDS":
       return { ...state, seconds: action.payload };
-    case "INPUT":
-      return { ...state, lastInputSelected: action.payload };
+    case "UNIT_TIME":
+      return { ...state, selectedUnitTime: action.payload };
     case "UPDATE_TIMES":
       const timeUnit = state.lastInputSelected.dataset.timeUnit;
 
