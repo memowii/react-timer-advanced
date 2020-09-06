@@ -76,31 +76,19 @@ export function timerReducer(state, action) {
           return {
             ...state,
             seconds: "00",
-            milliseconds: calcMilliseconds(
-              state.hours,
-              state.minutes,
-              0
-            ),
+            milliseconds: calcMilliseconds(state.hours, state.minutes, 0),
           };
         case "m":
           return {
             ...state,
             minutes: "00",
-            milliseconds: calcMilliseconds(
-              state.hours,
-              0,
-              state.seconds
-            ),
+            milliseconds: calcMilliseconds(state.hours, 0, state.seconds),
           };
         case "h":
           return {
             ...state,
             hours: "00",
-            milliseconds: calcMilliseconds(
-              0,
-              state.minutes,
-              state.seconds
-            ),
+            milliseconds: calcMilliseconds(0, state.minutes, state.seconds),
           };
       }
     case "TIMEINFO":
