@@ -2,9 +2,9 @@ import { Time } from "../Utils/time";
 
 export const timerInitialState = {
   milliseconds: 0,
-  seconds: '00',
-  minutes: '00',
-  hours: '00',
+  seconds: "00",
+  minutes: "00",
+  hours: "00",
   // unit time can take the value of h, m, or s.
   selectedUnitTime: null,
   timeInfo: Time.getTime(0),
@@ -35,16 +35,25 @@ export function timerReducer(state, action) {
       return { ...state, seconds: action.payload };
     case "UNIT_TIME":
       return { ...state, selectedUnitTime: action.payload };
-    case "UPDATE_TIMES":
-      const timeUnit = state.lastInputSelected.dataset.timeUnit;
-
-      switch (timeUnit) {
+    case "UPDATE_TIME_UNIT":
+      switch (state.selectedUnitTime) {
         case "s":
-          return { ...state, seconds: action.payload };
+          return {
+            ...state,
+            seconds: formatUnitTime(state.seconds, action.payload),
+          };
         case "m":
-          return { ...state, minutes: action.payload };
+          return {
+            ...state,
+            minutes: formatUnitTime(state.minutes, action.payload),
+          };
         case "h":
-          return { ...state, hours: action.payload };
+          return {
+            ...state,
+            hours: formatUnitTime(state.hours, action.payload),
+          };
+        default:
+          throw new Error();
       }
     case "TIMEINFO":
       return { ...state, timeInfo: Time.getTime(action.payload) };
@@ -60,3 +69,6 @@ export function timerReducer(state, action) {
       throw new Error();
   }
 }
+
+const formatUnitTime = (currentValue, value) =>
+  currentValue.split("")[1] + value;
