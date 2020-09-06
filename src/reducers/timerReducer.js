@@ -41,16 +41,31 @@ export function timerReducer(state, action) {
           return {
             ...state,
             seconds: formatUnitTime(state.seconds, action.payload),
+            milliseconds: calcMilliseconds(
+              state.hours,
+              state.minutes,
+              action.payload
+            ),
           };
         case "m":
           return {
             ...state,
             minutes: formatUnitTime(state.minutes, action.payload),
+            milliseconds: calcMilliseconds(
+              state.hours,
+              action.payload,
+              state.seconds
+            ),
           };
         case "h":
           return {
             ...state,
             hours: formatUnitTime(state.hours, action.payload),
+            milliseconds: calcMilliseconds(
+              action.payload,
+              state.minutes,
+              state.seconds
+            ),
           };
         default:
           throw new Error();
@@ -58,11 +73,35 @@ export function timerReducer(state, action) {
     case "CLEAR_UNIT_TIME":
       switch (state.selectedUnitTime) {
         case "s":
-          return { ...state, seconds: "00" };
+          return {
+            ...state,
+            seconds: "00",
+            milliseconds: calcMilliseconds(
+              state.hours,
+              state.minutes,
+              0
+            ),
+          };
         case "m":
-          return { ...state, minutes: "00" };
+          return {
+            ...state,
+            minutes: "00",
+            milliseconds: calcMilliseconds(
+              state.hours,
+              0,
+              state.seconds
+            ),
+          };
         case "h":
-          return { ...state, hours: "00" };
+          return {
+            ...state,
+            hours: "00",
+            milliseconds: calcMilliseconds(
+              0,
+              state.minutes,
+              state.seconds
+            ),
+          };
       }
     case "TIMEINFO":
       return { ...state, timeInfo: Time.getTime(action.payload) };
@@ -81,3 +120,7 @@ export function timerReducer(state, action) {
 
 const formatUnitTime = (currentValue, value) =>
   currentValue.split("")[1] + value;
+
+const calcMilliseconds = (hours, minutes, seconds) =>
+  (parseInt(hours) * 60 * 60 + parseInt(minutes) * 60 + parseInt(seconds)) *
+  1000;
