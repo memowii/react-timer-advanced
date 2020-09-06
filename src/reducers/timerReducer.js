@@ -55,6 +55,15 @@ export function timerReducer(state, action) {
         default:
           throw new Error();
       }
+    case "CLEAR_UNIT_TIME":
+      switch (state.selectedUnitTime) {
+        case "s":
+          return { ...state, seconds: "00" };
+        case "m":
+          return { ...state, minutes: "00" };
+        case "h":
+          return { ...state, hours: "00" };
+      }
     case "TIMEINFO":
       return { ...state, timeInfo: Time.getTime(action.payload) };
     case "UPDATE_TIMEINFO":

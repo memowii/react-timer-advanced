@@ -18,8 +18,13 @@ export function Timer() {
 
     if (!state.selectedUnitTime) return;
 
-    const btn = e.target;
-    dispatch({ type: "UPDATE_TIME_UNIT", payload: btn.dataset.value });
+    const value = e.target.dataset.value;
+
+    if (value === "x") {
+      dispatch({ type: "CLEAR_UNIT_TIME" });
+    } else {
+      dispatch({ type: "UPDATE_TIME_UNIT", payload: value });
+    }
   };
 
   return (
