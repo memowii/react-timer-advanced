@@ -7,6 +7,7 @@ export const timerInitialState = {
   hours: "00",
   // unit time can take the value of h, m, or s.
   selectedUnitTime: null,
+  canStart: false,
   timeInfo: Time.getTime(0),
   isTimerStarted: false,
   timerInterval: null,
@@ -44,7 +45,7 @@ export function timerReducer(state, action) {
             milliseconds: calcMilliseconds(
               state.hours,
               state.minutes,
-              action.payload
+              formatUnitTime(state.seconds, action.payload)
             ),
           };
         case "m":
@@ -53,7 +54,7 @@ export function timerReducer(state, action) {
             minutes: formatUnitTime(state.minutes, action.payload),
             milliseconds: calcMilliseconds(
               state.hours,
-              action.payload,
+              formatUnitTime(state.minutes, action.payload),
               state.seconds
             ),
           };
@@ -62,7 +63,7 @@ export function timerReducer(state, action) {
             ...state,
             hours: formatUnitTime(state.hours, action.payload),
             milliseconds: calcMilliseconds(
-              action.payload,
+              formatUnitTime(state.hours, action.payload),
               state.minutes,
               state.seconds
             ),
@@ -90,6 +91,14 @@ export function timerReducer(state, action) {
             hours: "00",
             milliseconds: calcMilliseconds(0, state.minutes, state.seconds),
           };
+        default:
+          throw new Error();
+      }
+    case "CAN_START":
+      if (state.milliseconds > 0) {
+        return { ...state, canStart: true };
+      } else {
+        return { ...state, canStart: false };
       }
     case "TIMEINFO":
       return { ...state, timeInfo: Time.getTime(action.payload) };

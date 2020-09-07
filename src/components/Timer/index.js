@@ -24,6 +24,7 @@ export function Timer() {
       dispatch({ type: "CLEAR_UNIT_TIME" });
     } else {
       dispatch({ type: "UPDATE_TIME_UNIT", payload: value });
+      dispatch({ type: "CAN_START" });
     }
   };
 
