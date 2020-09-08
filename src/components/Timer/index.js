@@ -51,7 +51,11 @@ export function Timer() {
 
       {!isTimerStarted && <Keypad handleOnClick={handleOnClick} />}
 
-      <Controls canStart={canStart} onStart={handleOnStart} />
+      <Controls
+        canStart={canStart}
+        onStart={handleOnStart}
+        isTimerStarted={isTimerStarted}
+      />
     </div>
   );
 }
