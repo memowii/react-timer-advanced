@@ -9,7 +9,7 @@ export const timerInitialState = {
   selectedUnitTime: null,
   canStart: false,
   timeInfo: Time.getTime(0),
-  isTimerStarted: false,
+  isTimerStarted: true,
   timerInterval: null,
   isAlmostFinished: false,
 };

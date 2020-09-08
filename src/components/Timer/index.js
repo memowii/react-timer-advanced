@@ -4,12 +4,13 @@ import "./index.css";
 import { Display } from "./Display";
 import { Keypad } from "./Keypad";
 import { Controls } from "./Controls";
+import { DisplayCountdown } from "./DisplayCountdown";
 
 import { timerInitialState, timerReducer } from "../../reducers/timerReducer";
 
 export function Timer() {
   const [
-    { selectedUnitTime, hours, minutes, seconds, canStart },
+    { selectedUnitTime, hours, minutes, seconds, canStart, isTimerStarted },
     dispatch,
   ] = useReducer(timerReducer, timerInitialState);
 
@@ -32,16 +33,25 @@ export function Timer() {
     }
   };
 
+  const handleOnStart = () =>
+    dispatch({ type: "TIMER_STARTED", payload: true });
+
   return (
     <div className="Timer">
-      <Display
-        hours={hours}
-        minutes={minutes}
-        seconds={seconds}
-        handleOnFocus={handleOnFocus}
-      />
-      <Keypad handleOnClick={handleOnClick} />
-      <Controls canStart={canStart} />
+      {isTimerStarted && <DisplayCountdown />}
+
+      {!isTimerStarted && (
+        <Display
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+          handleOnFocus={handleOnFocus}
+        />
+      )}
+
+      {!isTimerStarted && <Keypad handleOnClick={handleOnClick} />}
+
+      <Controls canStart={canStart} onStart={handleOnStart} />
     </div>
   );
 }
