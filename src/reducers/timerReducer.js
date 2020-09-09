@@ -9,9 +9,8 @@ export const timerInitialState = {
   selectedUnitTime: null,
   canStart: false,
   timeInfo: Time.getTime(0),
-  isTimerStarted: true,
+  isTimerStarted: false,
   timerInterval: null,
-  isAlmostFinished: false,
 };
 
 export function timerReducer(state, action) {
@@ -19,13 +18,21 @@ export function timerReducer(state, action) {
     case "MILLISECONDS":
       return { ...state, milliseconds: action.payload };
     case "DEC_MILLISECONDS":
-      if (state.isTimerStarted && state.milliseconds < 10 * 1000) {
-        state.isAlmostFinished = true;
-      }
-
       if (state.milliseconds < 0) {
         clearInterval(state.timerInterval);
-        return { ...timerInitialState };
+        return {
+          ...timerInitialState,
+          selectedUnitTime: state.selectedUnitTime,
+          milliseconds: calcMilliseconds(
+            state.hours,
+            state.minutes,
+            state.seconds
+          ),
+          seconds: state.seconds,
+          minutes: state.minutes,
+          hours: state.hours,
+          canStart: state.canStart,
+        };
       }
 
       return {
@@ -108,8 +115,6 @@ export function timerReducer(state, action) {
       return { ...state, isTimerStarted: action.payload };
     case "TIMER_INTERVAL":
       return { ...state, timerInterval: action.payload };
-    case "TIMER_ALMOST_FINISHED":
-      return { ...state, isAlmostFinished: action.payload };
     default:
       throw new Error();
   }

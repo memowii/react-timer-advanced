@@ -10,7 +10,7 @@ import { timerInitialState, timerReducer } from "../../reducers/timerReducer";
 
 export function Timer() {
   const [
-    { selectedUnitTime, hours, minutes, seconds, canStart, isTimerStarted },
+    { selectedUnitTime, hours, minutes, seconds, canStart, isTimerStarted, timeInfo },
     dispatch,
   ] = useReducer(timerReducer, timerInitialState);
 
@@ -33,12 +33,20 @@ export function Timer() {
     }
   };
 
-  const handleOnStart = () =>
+  const handleOnStart = () => {
     dispatch({ type: "TIMER_STARTED", payload: true });
+
+    const timerInterval = setInterval(() => {
+      dispatch({ type: "DEC_MILLISECONDS" });
+      dispatch({ type: "UPDATE_TIMEINFO" });
+    }, 10);
+
+    dispatch({ type: "TIMER_INTERVAL", payload: timerInterval });
+  };
 
   return (
     <div className="Timer">
-      {isTimerStarted && <DisplayCountdown />}
+      {isTimerStarted && <DisplayCountdown time={timeInfo} />}
 
       {!isTimerStarted && (
         <Display

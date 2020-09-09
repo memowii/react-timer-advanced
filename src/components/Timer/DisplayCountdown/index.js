@@ -3,11 +3,11 @@ import React from "react";
 import "./index.css";
 import { Labels } from "./Labels";
 
-export const DisplayCountdown = () => {
+export const DisplayCountdown = ({ time }) => {
   return (
     <div className="DisplayCountdown">
       <Labels />
-      <div className="DisplayCountdown__time">00:04:52:99</div>
+      <div className="DisplayCountdown__time">{time}</div>
     </div>
   );
 };
