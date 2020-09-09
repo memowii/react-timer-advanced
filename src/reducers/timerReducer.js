@@ -118,6 +118,20 @@ export function timerReducer(state, action) {
       return { ...state, timerInterval: action.payload };
     case "TIMER_STOPPED":
       return { ...state, isTimerStopped: action.payload };
+    case "RESET_TIMER":
+      return {
+        ...timerInitialState,
+        selectedUnitTime: state.selectedUnitTime,
+        milliseconds: calcMilliseconds(
+          state.hours,
+          state.minutes,
+          state.seconds
+        ),
+        seconds: state.seconds,
+        minutes: state.minutes,
+        hours: state.hours,
+        canStart: state.canStart,
+      };
     default:
       throw new Error();
   }

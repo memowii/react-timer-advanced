@@ -8,6 +8,7 @@ export const Controls = ({
   isTimerStarted,
   onStop,
   isTimerStopped,
+  onReset,
 }) => (
   <div className="Controls">
     {!isTimerStarted ? (
@@ -30,7 +31,7 @@ export const Controls = ({
         </button>
         <button
           className="btn btn-primary btn-lg btn-block rounded-0 mt-0"
-          onClick={onStart}
+          onClick={onReset}
         >
           RESET
         </button>

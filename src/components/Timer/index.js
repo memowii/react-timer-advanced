@@ -69,6 +69,12 @@ export function Timer() {
     }
   };
 
+  const handleOnReset = () => {
+    clearInterval(timerInterval);
+    dispatch({ type: "TIMER_INTERVAL", payload: null });
+    dispatch({ type: "RESET_TIMER" });
+  };
+
   return (
     <div className="Timer">
       {isTimerStarted && <DisplayCountdown time={timeInfo} />}
@@ -90,6 +96,7 @@ export function Timer() {
         onStop={handleOnStop}
         isTimerStarted={isTimerStarted}
         isTimerStopped={isTimerStopped}
+        onReset={handleOnReset}
       />
     </div>
   );
