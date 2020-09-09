@@ -13,8 +13,8 @@ export const Keypad = ({ handleOnClick }) => (
     <button className="btn btn-light btn-sm" data-value="7">7</button>
     <button className="btn btn-light btn-sm" data-value="8">8</button>
     <button className="btn btn-light btn-sm" data-value="9">9</button>
-    <button className="btn btn-light btn-sm" data-value="x">x</button>
-    <button className="btn btn-light btn-sm" data-value="0">0</button>
-    <button className="btn btn-light btn-sm">&nbsp;</button>
+    <button className="btn btn-light btn-sm font-weight-bolder" data-value="x">x</button>
+    <button className="btn btn-light btn-sm">0</button>
+    <button className="btn btn-light btn-sm" disabled>&nbsp;</button>
   </div>
 );

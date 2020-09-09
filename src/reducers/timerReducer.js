@@ -11,6 +11,7 @@ export const timerInitialState = {
   timeInfo: Time.getTime(0),
   isTimerStarted: false,
   timerInterval: null,
+  isTimerStopped: false,
 };
 
 export function timerReducer(state, action) {
@@ -115,6 +116,8 @@ export function timerReducer(state, action) {
       return { ...state, isTimerStarted: action.payload };
     case "TIMER_INTERVAL":
       return { ...state, timerInterval: action.payload };
+    case "TIMER_STOPPED":
+      return { ...state, isTimerStopped: action.payload };
     default:
       throw new Error();
   }
@@ -123,6 +126,13 @@ export function timerReducer(state, action) {
 const formatUnitTime = (currentValue, value) =>
   currentValue.split("")[1] + value;
 
-const calcMilliseconds = (hours, minutes, seconds) =>
-  (parseInt(hours) * 60 * 60 + parseInt(minutes) * 60 + parseInt(seconds)) *
-  1000;
+const calcMilliseconds = (hours, minutes, seconds) => {
+  const maxMillisecondsAllowed = 359999000;
+  const milliseconds =
+    (parseInt(hours) * 60 * 60 + parseInt(minutes) * 60 + parseInt(seconds)) *
+    1000;
+
+  if (milliseconds > maxMillisecondsAllowed) return maxMillisecondsAllowed;
+
+  return milliseconds;
+};

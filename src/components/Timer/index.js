@@ -10,7 +10,17 @@ import { timerInitialState, timerReducer } from "../../reducers/timerReducer";
 
 export function Timer() {
   const [
-    { selectedUnitTime, hours, minutes, seconds, canStart, isTimerStarted, timeInfo },
+    {
+      selectedUnitTime,
+      hours,
+      minutes,
+      seconds,
+      canStart,
+      isTimerStarted,
+      timeInfo,
+      timerInterval,
+      isTimerStopped,
+    },
     dispatch,
   ] = useReducer(timerReducer, timerInitialState);
 
@@ -35,13 +45,28 @@ export function Timer() {
 
   const handleOnStart = () => {
     dispatch({ type: "TIMER_STARTED", payload: true });
+    createTimerInterval();
+  };
 
+  const createTimerInterval = () => {
     const timerInterval = setInterval(() => {
       dispatch({ type: "DEC_MILLISECONDS" });
       dispatch({ type: "UPDATE_TIMEINFO" });
     }, 10);
 
     dispatch({ type: "TIMER_INTERVAL", payload: timerInterval });
+  };
+
+  const handleOnStop = () => {
+    if (!isTimerStopped) {
+      clearInterval(timerInterval);
+      dispatch({ type: "TIMER_INTERVAL", payload: null });
+      dispatch({ type: "TIMER_STOPPED", payload: true });
+    } else {
+      createTimerInterval();
+
+      dispatch({ type: "TIMER_STOPPED", payload: false });
+    }
   };
 
   return (
@@ -62,7 +87,9 @@ export function Timer() {
       <Controls
         canStart={canStart}
         onStart={handleOnStart}
+        onStop={handleOnStop}
         isTimerStarted={isTimerStarted}
+        isTimerStopped={isTimerStopped}
       />
     </div>
   );
